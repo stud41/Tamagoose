@@ -29,10 +29,4 @@ pygame.quit()
 
 
 
-#spielcode
-
-
-
-
-pygame.quit()
 
