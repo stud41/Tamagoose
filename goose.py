@@ -1,31 +1,57 @@
 import pygame
 
+# Initialize Pygame
 pygame.init()
 
-screen_width = 600
-screen_height = 400
+# Screen setup
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption("Pressable Button Example")
 
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Tamagoose")
+# Colors
+BG_COLOR = (198, 219, 255)
+BUTTON_COLOR = (100, 100, 100)
+BUTTON_HOVER = (120, 120, 120)
+TEXT_COLOR = (255, 255, 255)
 
-game_on = True
-screen_color = (198, 219, 255)
+# Font
+font = pygame.font.SysFont(None, 36)
 
-while game_on:
-    # Handle events inside the game loop
+# Button setup
+button_rect = pygame.Rect(20, 20, 200, 60)  # x, y, width, height
+
+# Main loop
+running = True
+while running:
+    mouse_pos = pygame.mouse.get_pos()
+    mouse_pressed = pygame.mouse.get_pressed()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            game_on = False
+            running = False
 
-    # Fill the screen with the background color
-    screen.fill(screen_color)
+        # Detect click inside button
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if button_rect.collidepoint(event.pos):
+                print("Button pressed!")
 
-    # Update the display
+    # Fill background
+    screen.fill(BG_COLOR)
+
+    # Change color on hover
+    if button_rect.collidepoint(mouse_pos):
+        color = BUTTON_HOVER
+    else:
+        color = BUTTON_COLOR
+
+    # Draw the button
+    pygame.draw.rect(screen, color, button_rect)
+
+    # Draw button text
+    text_surf = font.render("MENU", True, TEXT_COLOR)
+    text_rect = text_surf.get_rect(center=button_rect.center)
+    screen.blit(text_surf, text_rect)
+
     pygame.display.update()
 
 pygame.quit()
-
-
-
-
 
