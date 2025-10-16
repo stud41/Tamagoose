@@ -1,0 +1,24 @@
+import pygame
+import random
+import sys
+
+pygame.init()
+
+screen_width = 640
+screen_height = 400
+
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+pygame.display.set_caption("Tamagoose")
+
+running = True
+
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+            
+    screen.fill((182, 220, 250))
+
+pygame.quit()
+sys.exit()
