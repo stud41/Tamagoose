@@ -25,6 +25,9 @@ running = True
 while running:
     mouse_pos = pygame.mouse.get_pos()
     mouse_pressed = pygame.mouse.get_pressed()
+    
+    # Fill background
+    #screen.fill(BG_COLOR)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -35,9 +38,6 @@ while running:
             if button_rect.collidepoint(event.pos):
                 pygame.draw.rect(screen, (100, 100, 100), (rect_x, rect_y, rect_width, rect_height))
                 print("button pressed")
-
-    # Fill background
-    screen.fill(BG_COLOR)
 
     # Change color on hover
     if button_rect.collidepoint(mouse_pos):
