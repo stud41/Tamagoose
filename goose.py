@@ -7,13 +7,14 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Pressable Button Example")
 
-# Colors
+
 BG_COLOR = (198, 219, 255)
 BUTTON_COLOR = (100, 100, 100)
 BUTTON_HOVER = (120, 120, 120)
 TEXT_COLOR = (255, 255, 255)
 
-# Font
+rect_x, rect_y, rect_width, rect_height = 100, 200, 600, 300
+
 font = pygame.font.SysFont(None, 36)
 
 # Button setup
@@ -32,7 +33,8 @@ while running:
         # Detect click inside button
         if event.type == pygame.MOUSEBUTTONDOWN:
             if button_rect.collidepoint(event.pos):
-                print("Button pressed!")
+                pygame.draw.rect(screen, (100, 100, 100), (rect_x, rect_y, rect_width, rect_height))
+                print("button pressed")
 
     # Fill background
     screen.fill(BG_COLOR)
@@ -54,4 +56,3 @@ while running:
     pygame.display.update()
 
 pygame.quit()
-
