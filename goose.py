@@ -9,23 +9,21 @@ pygame.display.set_caption("Pressable Button Example")
 
 
 BG_COLOR = (198, 219, 255)
-BUTTON_COLOR = (153, 76, 0)
+BUTTON_COLOR = (153,76,0)
 BUTTON_HOVER = (174, 92, 10)
 TEXT_COLOR = (255, 255, 255)
 
 bg = pygame.image.load("GOOSE NORMAL.jpg")
 bg = pygame.transform.scale(bg, (800, 600))
 
-
 button_pressed = False
 first_run = True
 
 rect_x, rect_y, rect_width, rect_height = 100, 200, 600, 300
-
+rect_color_r, rect_color_g, rect_color_b = 250, 227, 206
 
 font = pygame.font.SysFont(None, 36)
 
-# Button setup
 button_rect = pygame.Rect(20, 20, 100, 50)  # x, y, width, height
 
 # Main loop
@@ -47,13 +45,12 @@ while running:
             if not button_pressed:
                 print("button pressed")
                 button_pressed = True
-                pygame.draw.rect(screen, (250, 221, 192), (rect_x, rect_y, rect_width, rect_height))
+                pygame.draw.rect(screen, (rect_color_r, rect_color_g, rect_color_b), (rect_x, rect_y, rect_width, rect_height))
             else:
                 print("this should actually delete the rectangle")
                 screen.blit(bg, (0,0))
                 button_pressed = False
-            
-        
+                
 
     # Change color on hover
     if button_rect.collidepoint(mouse_pos):
@@ -72,4 +69,3 @@ while running:
     pygame.display.update()
 
 pygame.quit()
-
