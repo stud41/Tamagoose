@@ -13,7 +13,10 @@ BUTTON_COLOR = (100, 100, 100)
 BUTTON_HOVER = (120, 120, 120)
 TEXT_COLOR = (255, 255, 255)
 
+button_pressed = False
+
 rect_x, rect_y, rect_width, rect_height = 100, 200, 600, 300
+
 
 font = pygame.font.SysFont(None, 36)
 
@@ -34,10 +37,19 @@ while running:
             running = False
 
         # Detect click inside button
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if button_rect.collidepoint(event.pos):
-                pygame.draw.rect(screen, (100, 100, 100), (rect_x, rect_y, rect_width, rect_height))
+        if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
+            if not button_pressed:
                 print("button pressed")
+                button_pressed = True
+                pygame.draw.rect(screen, (100, 100, 100), (rect_x, rect_y, rect_width, rect_height))
+            else:
+                print("this should actually delete the rectangle")
+                pygame.draw.rect(screen, (0, 0, 0), (rect_x, rect_y, rect_width, rect_height))
+                button_pressed = False    
+            
+        
+    pygame.display.update()
+        
 
     # Change color on hover
     if button_rect.collidepoint(mouse_pos):
