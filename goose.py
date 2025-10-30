@@ -43,6 +43,8 @@ while running:
     if first_run:
         screen.blit(bg, (0,0))
         first_run = False
+        if goose_groesse == 1:
+            screen.blit(goose_groesse1, (8,4))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -58,10 +60,8 @@ while running:
                 print("menu away")
                 screen.blit(bg, (0,0))
                 button_pressed = False
+                first_run = True
             
-                
-    if goose_groesse == 1:
-        screen.blit(goose_groesse1, (8,4))
         # Change color on hover
     if button_rect.collidepoint(mouse_pos):
         color = BUTTON_HOVER
