@@ -1,0 +1,70 @@
+import pygame
+
+pygame.init()
+
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('Draining Health Bar Timer')
+
+clock = pygame.time.Clock() 
+FPS = 60
+
+DRAIN_RATE_PER_SECOND = 2.5
+
+class HealthBar():
+    def __init__(self, x, y, w, h, max_hp):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.hp = max_hp
+        self.max_hp = max_hp
+
+    def draw(self, surface):
+        
+        # Ensure health doesn't drop below zero before drawing
+        if self.hp < 0:
+            self.hp = 0
+
+        # Calculate the ratio for the green bar's width
+        ratio = self.hp / self.max_hp
+        
+        # Background (Red) - represents max health
+        pygame.draw.rect(surface, "red", (self.x, self.y, self.w, self.h))
+        
+        # Foreground (Green) - represents current health
+        pygame.draw.rect(surface, "green", (self.x, self.y, self.w * ratio, self.h))
+
+
+health_bar = HealthBar(480, 50, 300, 40, 100)
+
+run = True
+while run:
+    # 1. GET DELTA TIME (dt)
+    dt = clock.tick(FPS)  # dt is the time passed since the last frame in milliseconds
+    
+    # 2. EVENT HANDLING (Must be at the start of the loop)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False # Use a single '=' for assignment here
+
+    # 3. UPDATE LOGIC (Draining the Health)
+    # Calculate how much health to lose based on time passed (dt)
+    # (dt / 1000.0) converts milliseconds (dt) to seconds
+    health_loss = DRAIN_RATE_PER_SECOND * (dt / 1000.0)
+    
+    # Decrease the health by the calculated loss
+    health_bar.hp -= health_loss
+    
+    # 4. DRAWING (Must happen after update and inside the loop)
+    screen.fill("white")
+
+    # Draw health bar
+    health_bar.draw(screen)
+
+    # 5. REFRESH DISPLAY (Must be the last step in the loop)
+    pygame.display.flip()
+
+pygame.quit()
