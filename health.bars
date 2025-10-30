@@ -1,0 +1,102 @@
+import pygame
+
+pygame.init()
+
+
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('Draining Health Bar Timer')
+
+
+clock = pygame.time.Clock() 
+FPS = 60
+
+
+DRAIN_RATE_PER_SECOND = 2.5 # Used for the main health bar (health_bar_player)
+
+# Define different drain rates for the other bars
+DRAIN_RATE_ENEMY_1 = 1.0
+DRAIN_RATE_ENEMY_2 = 5.0
+
+
+class HealthBar():
+    def __init__(self, x, y, w, h, max_hp):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.hp = max_hp
+        self.max_hp = max_hp
+
+    def draw(self, surface):
+        
+        # Ensure health doesn't drop below zero before drawing
+        if self.hp < 0:
+            self.hp = 0
+
+        # Calculate the ratio for the green bar's width
+        ratio = self.hp / self.max_hp
+        
+        # Background (Red) - represents max health
+        pygame.draw.rect(surface, "red", (self.x, self.y, self.w, self.h))
+        
+        # Foreground (Green) - represents current health
+        pygame.draw.rect(surface, "green", (self.x, self.y, self.w * ratio, self.h))
+
+    # *** NEW METHOD: The update logic is moved into the class for cleaner code ***
+    def update_health(self, dt_seconds, drain_rate):
+        # Only drain health if it's above zero
+        if self.hp > 0:
+            health_loss = drain_rate * dt_seconds
+            self.hp -= health_loss
+        else:
+            self.hp = 0
+
+
+# --- Creating Multiple Instances (Health Bars) ---
+
+# 1. Player's Health Bar (Uses the original drain rate)
+health_bar_player = HealthBar(480, 50, 300, 40, 100) 
+
+# 2. Enemy 1's Health Bar (Lower on the screen)
+health_bar_enemy1 = HealthBar(50, 50, 200, 30, 50) 
+
+# 3. Boss's Health Bar (Different size and max HP)
+health_bar_boss = HealthBar(50, 100, 400, 50, 500) 
+
+# --- CRITICAL: List of all health bars for easy management ---
+all_health_bars = [health_bar_player, health_bar_enemy1, health_bar_boss]
+
+
+run = True
+while run:
+    dt = clock.tick(FPS)  
+    # Convert milliseconds (dt) to seconds
+    dt_seconds = dt / 1000.0 
+    
+    # 1. EVENT HANDLING
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False 
+
+    # 2. UPDATE LOGIC for ALL Health Bars
+    
+    # We call the new update_health method for each bar with its unique drain rate
+    health_bar_player.update_health(dt_seconds, DRAIN_RATE_PER_SECOND)
+    health_bar_enemy1.update_health(dt_seconds, DRAIN_RATE_ENEMY_1)
+    health_bar_boss.update_health(dt_seconds, DRAIN_RATE_ENEMY_2)
+    
+    
+    # 3. DRAWING 
+    screen.fill("black") # Changed background to black for better contrast
+
+    # Use a loop to draw ALL health bars
+    for bar in all_health_bars:
+        bar.draw(screen)
+
+    # 4. REFRESH DISPLAY
+    pygame.display.flip()
+
+pygame.quit()
