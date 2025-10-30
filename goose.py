@@ -1,4 +1,3 @@
-
 import pygame
 
 # Initialize Pygame
@@ -17,12 +16,12 @@ TEXT_COLOR = (255, 255, 255)
 # 1=klein, 2=mittel, 3=groß
 goose_grosse = 1
 
-goose_1 = pygame.image.load("C:/Users/ReDI User/Desktop/repo/SMALL GOOSE PNG.png")
+goose_1 = pygame.image.load("C:/Users/redi-user/Desktop/SMALL GOOSE PNG.png")
 goose_1 = pygame.transform.scale(goose_1, (800, 600))
 # 1=normal, 2=baden, 3=schlafen, 4=essen
 goose_machen = 1
 
-bg = pygame.image.load("C:/Users/ReDI User/Desktop/repo/GANZES BACKROUND.png")
+bg = pygame.image.load("C:/Users/redi-user/Desktop/GANZES BACKROUND.png")
 bg = pygame.transform.scale(bg, (800, 600))
 
 button_pressed = False
@@ -33,7 +32,8 @@ Menu_color = 255, 246, 189
 
 font = pygame.font.SysFont(None, 36)
 
-button_rect = pygame.Rect(20, 20, 100, 50)  # x, y, width, height
+button_rect = pygame.Rect(20, 20, 100, 50)# x, y, width, height
+food_rect = pygame.Rect(170, 240, 150, 60)
 
 # Main loop
 running = True
@@ -57,10 +57,11 @@ while running:
             if not button_pressed:
                 print("button pressed")
                 button_pressed = True
-                pygame.draw.rect(screen, (Menu_color), (rect_x, rect_y, rect_width, rect_height),0,20)
-                pygame.draw.rect(screen, (139,69,19), (rect_x-5, rect_y-5, rect_width+10, rect_height+10), 10, 30)
+                pygame.draw.rect(screen, (Menu_color), (rect_x, rect_y, rect_width, rect_height), 0, 20)
+                pygame.draw.rect(screen, (139, 69, 19), (rect_x-5, rect_y-5, rect_width+10, rect_height+10), 10, 30)
+                pygame.draw.rect(screen, (238, 154, 73), food_rect)
             else:
-                print("rect away")
+                print("this should actually delete the rectangle")
                 screen.blit(bg, (0,0))
                 button_pressed = False
                 first_run = True
@@ -83,5 +84,3 @@ while running:
     pygame.display.update()
 
 pygame.quit()
-
-
