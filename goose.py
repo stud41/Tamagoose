@@ -5,7 +5,7 @@ pygame.init()
 
 # Screen setup
 screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Tamagoose")
+pygame.display.set_caption("Pressable Button Example")
 
 
 BG_COLOR = (198, 219, 255)
@@ -13,22 +13,22 @@ BUTTON_COLOR = (153,76,0)
 BUTTON_HOVER = (174, 92, 10)
 TEXT_COLOR = (255, 255, 255)
 
-#1=klein, 2=mittel, 3=gross
-goose_groesse = 1
+# 1=klein, 2=mittel, 3=groß
+goose_grosse = 1
+
+goose_1 = pygame.image.load("C:/Users/redi-user/Desktop/SMALL GOOSE PNG.png")
+goose_1 = pygame.transform.scale(goose_1, (800, 600))
+# 1=normal, 2=baden, 3=schlafen, 4=essen
 goose_machen = 1
-#1=wohnzimmer, 2=baden 3=schlafen
-goose_groesse1 = pygame.image.load("C:/Users/ReDI User/Desktop/repo/SMALL GOOSE PNG.png")
-goose_groesse1 = pygame.transform.scale(goose_groesse1, (800, 600))
 
-
-bg = pygame.image.load("C:/Users/ReDI User/Desktop/repo/GANZES BACKROUND.png")
+bg = pygame.image.load("C:/Users/redi-user/Desktop/GANZES BACKROUND.png")
 bg = pygame.transform.scale(bg, (800, 600))
 
 button_pressed = False
 first_run = True
 
 rect_x, rect_y, rect_width, rect_height = 100, 200, 600, 300
-rect_color_r, rect_color_g, rect_color_b = 255, 246, 189
+Menu_color = 255, 246, 189
 
 font = pygame.font.SysFont(None, 36)
 
@@ -43,26 +43,29 @@ while running:
     if first_run:
         screen.blit(bg, (0,0))
         first_run = False
-        if goose_groesse == 1:
-            screen.blit(goose_groesse1, (8,4))
+        if goose_grosse == 1:
+            screen.blit(goose_1, (8, 4))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
 
         # Detect click inside button
         if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
             if not button_pressed:
                 print("button pressed")
                 button_pressed = True
-                pygame.draw.rect(screen, (rect_color_r, rect_color_g, rect_color_b), (rect_x, rect_y, rect_width, rect_height))
+                pygame.draw.rect(screen, (Menu_color), (rect_x, rect_y, rect_width, rect_height))
+                pygame.draw.rect(screen, (0, 0, 0), (rect_x-5, rect_y-5, rect_width+10, rect_height+10), 10, 25)
             else:
-                print("menu away")
+                print("this should actually delete the rectangle")
                 screen.blit(bg, (0,0))
                 button_pressed = False
                 first_run = True
-            
-        # Change color on hover
+                
+
+    # Change color on hover
     if button_rect.collidepoint(mouse_pos):
         color = BUTTON_HOVER
     else:
