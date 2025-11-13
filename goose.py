@@ -77,6 +77,7 @@ while running:
                 screen.blit(bg, (0,0))
                 button_pressed = False
                 menu_button = False
+                first_run = True
                 
         if menu_button == True:
             screen.blit(food_rect, (160, 300))
@@ -112,3 +113,4 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
