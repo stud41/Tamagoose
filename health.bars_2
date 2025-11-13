@@ -1,0 +1,102 @@
+import pygame
+
+pygame.init()
+
+
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption('Draining Health Bar Timer')
+
+
+clock = pygame.time.Clock() 
+FPS = 60
+
+
+DRAIN_RATE_PER_SECOND = 2.0 
+
+DRAIN_RATE_PLAY = 3.0
+DRAIN_RATE_FOOD = 2.5
+DRAIN_RATE_SLEEP = 1.5
+
+
+class HealthBar():
+    def __init__(self, x, y, w, h, max_hp):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.hp = max_hp
+        self.max_hp = max_hp
+
+    def draw(self, surface):
+        
+       
+        if self.hp < 0:
+            self.hp = 0
+
+        
+        ratio = self.hp / self.max_hp
+        
+        
+        pygame.draw.rect(surface, "red", (self.x, self.y, self.w, self.h))
+        
+        
+        pygame.draw.rect(surface, "green", (self.x, self.y, self.w * ratio, self.h))
+
+    
+    def update_health(self, dt_seconds, drain_rate):
+        
+        if self.hp > 0:
+            health_loss = drain_rate * dt_seconds
+            self.hp -= health_loss
+        else:
+            self.hp = 0
+
+
+health_bar_play = HealthBar(480, 50, 300, 40, 100) 
+
+health_bar_food = HealthBar(480, 100, 300, 40, 100)
+
+health_bar_bath = HealthBar(480, 150, 300, 40, 100) 
+
+health_bar_sleep = HealthBar(480, 200, 300, 40, 100)
+
+
+
+# --- CRITICAL: List of all health bars for easy management ---
+all_health_bars = [health_bar_bath, health_bar_play, health_bar_food, health_bar_sleep]
+
+
+run = True
+while run:
+    dt = clock.tick(FPS)  
+    # Convert milliseconds (dt) to seconds
+    dt_seconds = dt / 1000.0 
+    
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False 
+
+    # 2. UPDATE LOGIC for ALL Health Bars
+    
+    # We call the new update_health method for each bar with its unique drain rate
+    health_bar_bath.update_health(dt_seconds, DRAIN_RATE_PER_SECOND)
+    health_bar_play.update_health(dt_seconds, DRAIN_RATE_PLAY)
+    health_bar_food.update_health(dt_seconds, DRAIN_RATE_FOOD)
+    health_bar_sleep.update_health(dt_seconds, DRAIN_RATE_SLEEP)
+    
+    
+    
+    screen.fill("white") 
+
+    # Use a loop to draw ALL health bars
+    for bar in all_health_bars:
+        bar.draw(screen)
+
+    
+    pygame.display.flip()
+
+pygame.quit()
