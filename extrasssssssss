@@ -1,0 +1,33 @@
+food_rect = pygame.image.load("C:/Users/ReDI/Downloads/FÜTTERN KNOPF.png")#pygame.Rect(200, 370, 150, 60)
+food_rect = pygame.transform.scale(food_rect, (266, 200))
+fake_food = pygame.Rect(280, 360, 110, 100)
+
+sleep_rect = pygame.image.load("C:/Users/ReDI/Downloads/SCHLAFEN KNOPF.png")#(440, 370, 150, 60)
+sleep_rect = pygame.transform.scale(sleep_rect, (266, 200))
+fake_sleep = pygame.Rect(410, 360, 110, 100)
+
+gluck_rect = pygame.image.load("C:/Users/ReDI/Downloads/SPIELEN KNOPF.png")#(440, 260, 150, 60)
+gluck_rect = pygame.transform.scale(gluck_rect, (266, 200))
+fake_gluck = pygame.Rect(280, 230, 110, 100)
+
+bad_rect = pygame.image.load("C:/Users/ReDI/Downloads/WASCHEN KNOPF 2.png")#(400, 210, 106, 120)
+bad_rect = pygame.transform.scale(bad_rect, (266, 200))
+fake_bad = pygame.Rect(410, 230, 110, 100)
+
+
+
+if event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+            goose_essen += 1
+            print("essen")
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+            goose_gluck += 1
+            print("spielen")
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+            goose_schlafen += 1
+            print("schlafen")
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+            goose_schlafen += 1
+            print("waschen")
+
+
+
