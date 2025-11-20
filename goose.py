@@ -33,22 +33,21 @@ font = pygame.font.SysFont(None, 36)
 button_rect = pygame.Rect(20, 20, 100, 50)
 
 # Menu buttons
-food_btn = pygame.image.load("C:/Users/ReDI/Downloads/FÜTTERN KNOPF.png")#pygame.Rect(200, 370, 150, 60)
+food_btn = pygame.image.load("C:/Users/ReDI/Downloads/FÜTTERN KNOPF.png")
 food_btn = pygame.transform.scale(food_btn, (266, 200))
 fake_food = pygame.Rect(280, 360, 110, 100)
 
-sleep_btn = pygame.image.load("C:/Users/ReDI/Downloads/SCHLAFEN KNOPF.png")#(440, 370, 150, 60)
+sleep_btn = pygame.image.load("C:/Users/ReDI/Downloads/SCHLAFEN KNOPF.png")
 sleep_btn = pygame.transform.scale(sleep_btn, (266, 200))
 fake_sleep = pygame.Rect(410, 360, 110, 100)
 
-gluck_btn = pygame.image.load("C:/Users/ReDI/Downloads/SPIELEN KNOPF.png")#(440, 260, 150, 60)
+gluck_btn = pygame.image.load("C:/Users/ReDI/Downloads/SPIELEN KNOPF.png")
 gluck_btn = pygame.transform.scale(gluck_btn, (266, 200))
 fake_gluck = pygame.Rect(280, 230, 110, 100)
 
-bad_btn = pygame.image.load("C:/Users/ReDI/Downloads/WASCHEN KNOPF 2.png")#(400, 210, 106, 120)
+bad_btn = pygame.image.load("C:/Users/ReDI/Downloads/WASCHEN KNOPF 2.png")
 bad_btn = pygame.transform.scale(bad_btn, (266, 200))
 fake_bad = pygame.Rect(410, 230, 110, 100)
-
 
 menu_button = False
 
@@ -91,7 +90,7 @@ all_health_bars = [
     health_bar_food, health_bar_sleep
 ]
 
-# ---------------------- MAIN UNIFIED GAME LOOP ---------------------
+# ---------------------- MAIN GAME LOOP ---------------------
 running = True
 while running:
     dt = clock.tick(FPS) / 1000.0
@@ -106,19 +105,24 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_f:
-            goose_essen += 1
-            print("essen")
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-            goose_gluck += 1
-            print("spielen")
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_s:
-            goose_schlafen += 1
-            print("schlafen")
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_w:
-            goose_schlafen += 1
-            print("waschen")
+
+        # ------- KEYBOARD CONTROLS FOR HEALTH BARS -------
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_f:  # Feed
+                health_bar_food.hp = min(100, health_bar_food.hp + 20)
+                print("essen +20")
+
+            if event.key == pygame.K_p:  # Play
+                health_bar_play.hp = min(100, health_bar_play.hp + 20)
+                print("spielen +20")
+
+            if event.key == pygame.K_s:  # Sleep
+                health_bar_sleep.hp = min(100, health_bar_sleep.hp + 20)
+                print("schlafen +20")
+
+            if event.key == pygame.K_w:  # Wash
+                health_bar_bath.hp = min(100, health_bar_bath.hp + 20)
+                print("waschen +20")
 
         # Menu button
         if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
@@ -147,7 +151,9 @@ while running:
     # ----------- DRAW MENU WINDOW -------------
     if menu_button:
         pygame.draw.rect(screen, Menu_color, (rect_x, rect_y, rect_width, rect_height), 0, 20)
-        pygame.draw.rect(screen, (139, 69, 19), (rect_x - 5, rect_y - 5, rect_width + 10, rect_height + 10), 10, 30)
+        pygame.draw.rect(screen, (139, 69, 19),
+                         (rect_x - 5, rect_y - 5, rect_width + 10, rect_height + 10),
+                         10, 30)
 
         screen.blit(food_btn, (185, 320))
         screen.blit(sleep_btn, (315, 320))
@@ -168,5 +174,4 @@ while running:
     pygame.display.update()
 
 pygame.quit()
-
 
