@@ -30,4 +30,7 @@ if event.type == pygame.KEYDOWN and event.key == pygame.K_f:
             print("waschen")
 
 
-
+goose_essen = 1
+goose_schlafen = 1
+goose_gluck = 1
+goose_baden = 1
