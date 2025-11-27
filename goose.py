@@ -1,3 +1,4 @@
+
 import pygame
 
 pygame.init()
@@ -20,11 +21,15 @@ goose_schlafen = 1
 goose_gluck = 1
 goose_baden = 1
 
-goose_1 = pygame.image.load("C:/Users/ReDI/Downloads/SMALL GOOSE PNG.png")
-goose_1 = pygame.transform.scale(goose_1, (800, 600))
+goose = 1
+if goose ==1:
+    goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
+    goose_1 = pygame.transform.scale(goose_1, (800, 600))
 
-bg = pygame.image.load("C:/Users/ReDI/Downloads/GANZES BACKROUND.png")
-bg = pygame.transform.scale(bg, (800, 600))
+grnd = 1
+if grnd == 1:
+    bg = pygame.image.load("C:/Users/ReDI User/Downloads/GANZES BACKROUND.png")
+    bg = pygame.transform.scale(bg, (800, 600))
 
 rect_x, rect_y, rect_width, rect_height = 250, 200, 300, 300
 Menu_color = (255, 246, 189)
@@ -33,25 +38,44 @@ font = pygame.font.SysFont(None, 36)
 button_rect = pygame.Rect(20, 20, 100, 50)
 
 # Menu buttons
-food_btn = pygame.image.load("C:/Users/ReDI/Downloads/FÜTTERN KNOPF.png")
+food_btn = pygame.image.load("C:/Users/ReDI User/Downloads/FÜTTERN KNOPF.png")
 food_btn = pygame.transform.scale(food_btn, (266, 200))
 fake_food = pygame.Rect(280, 360, 110, 100)
 
-sleep_btn = pygame.image.load("C:/Users/ReDI/Downloads/SCHLAFEN KNOPF.png")
+sleep_btn = pygame.image.load("C:/Users/ReDI User/Downloads/SCHLAFEN KNOPF.png")
 sleep_btn = pygame.transform.scale(sleep_btn, (266, 200))
 fake_sleep = pygame.Rect(410, 360, 110, 100)
 
-gluck_btn = pygame.image.load("C:/Users/ReDI/Downloads/SPIELEN KNOPF.png")
+gluck_btn = pygame.image.load("C:/Users/ReDI User/Downloads/SPIELEN KNOPF.png")
 gluck_btn = pygame.transform.scale(gluck_btn, (266, 200))
 fake_gluck = pygame.Rect(280, 230, 110, 100)
 
-bad_btn = pygame.image.load("C:/Users/ReDI/Downloads/WASCHEN KNOPF 2.png")
+bad_btn = pygame.image.load("C:/Users/ReDI User/Downloads/WASCHEN KNOPF 2.png")
 bad_btn = pygame.transform.scale(bad_btn, (266, 200))
 fake_bad = pygame.Rect(410, 230, 110, 100)
 
 menu_button = False
 
 # ---------------------- HEALTH BAR SYSTEM ---------------------
+meat_symbol = pygame.image.load("C:/Users/ReDI User/Downloads/FLEICH BILD.png")
+meat_symbol = pygame.transform.scale(meat_symbol, (75,50))
+
+sleep_symbol = pygame.image.load("C:/Users/ReDI User/Downloads/SLEEP PNG.png")
+sleep_symbol = pygame.transform.scale(sleep_symbol, (75,50))
+
+soap_symbol = pygame.image.load("C:/Users/ReDI User/Downloads/SOAP BILD.png")
+soap_symbol = pygame.transform.scale(soap_symbol, (75,50))
+
+# Rect bekommt automatisch die Größe des Bildes
+fake_meat = meat_symbol.get_rect()
+fake_meat.topleft = (475, 60)
+
+fake_sleep = sleep_symbol.get_rect()
+fake_sleep.topleft = (475, 130)
+
+fake_soap = soap_symbol.get_rect()
+fake_soap.topleft = (475, 100)
+
 DRAIN_RATE_PER_SECOND = 2.0
 DRAIN_RATE_PLAY = 3.0
 DRAIN_RATE_FOOD = 2.5
@@ -111,18 +135,50 @@ while running:
             if event.key == pygame.K_f:  # Feed
                 health_bar_food.hp = min(100, health_bar_food.hp + 20)
                 print("essen +20")
-
+                grnd = 1
+                grnd = 1
+                if grnd == 1:
+                    bg = pygame.image.load("C:/Users/ReDI User/Downloads/GANZES BACKROUND.png")
+                    bg = pygame.transform.scale(bg, (800, 600))
+                goose = 1
+                if goose ==1:
+                    goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600)) 
             if event.key == pygame.K_p:  # Play
                 health_bar_play.hp = min(100, health_bar_play.hp + 20)
                 print("spielen +20")
-
+                grnd = 1
+                grnd = 1
+                if grnd == 1:
+                    bg = pygame.image.load("C:/Users/ReDI User/Downloads/GANZES BACKROUND.png")
+                    bg = pygame.transform.scale(bg, (800, 600))
+                goose = 1
+                if goose ==1:
+                    goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600))                     
             if event.key == pygame.K_s:  # Sleep
                 health_bar_sleep.hp = min(100, health_bar_sleep.hp + 20)
                 print("schlafen +20")
-
+                grnd = 1
+                if grnd == 1:
+                    bg = pygame.image.load("C:/Users/ReDI User/Downloads/GANZES BACKROUND.png")
+                    bg = pygame.transform.scale(bg, (800, 600))
+                goose = 1
+                if goose ==1:
+                    goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600))      
             if event.key == pygame.K_w:  # Wash
                 health_bar_bath.hp = min(100, health_bar_bath.hp + 20)
                 print("waschen +20")
+                grnd = 2
+                if grnd == 2:
+                    bg = pygame.image.load("C:/Users/ReDI User/Downloads/GANZES BATHROOM.png")
+                    bg = pygame.transform.scale(bg, (800, 600))
+                goose = 2
+                if goose == 2:
+                    goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE BATH PNG.png")
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600))
+
 
         # Menu button
         if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
@@ -132,7 +188,7 @@ while running:
         if menu_button and event.type == pygame.MOUSEBUTTONDOWN:
             if fake_food.collidepoint(event.pos):
                 health_bar_food.hp = min(100, health_bar_food.hp + 20)
-
+ 
             if fake_sleep.collidepoint(event.pos):
                 health_bar_sleep.hp = min(100, health_bar_sleep.hp + 20)
 
@@ -161,6 +217,10 @@ while running:
         screen.blit(bad_btn, (315, 190))
 
     # ----------- DRAW MENU BUTTON -------------
+    screen.blit(meat_symbol, fake_meat)
+    screen.blit(sleep_symbol, fake_sleep)
+    screen.blit(soap_symbol, fake_soap)
+    
     color = BUTTON_HOVER if button_rect.collidepoint(mouse_pos) else BUTTON_COLOR
     pygame.draw.rect(screen, color, button_rect)
 
@@ -174,4 +234,5 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
 
