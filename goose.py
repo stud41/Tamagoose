@@ -21,6 +21,8 @@ goose_schlafen = 1
 goose_gluck = 1
 goose_baden = 1
 
+goose_findetdich = pygame.image.load("C:/Users/ReDI User/Downloads/I WILL FIND YOU.png")
+
 goose = 1
 if goose ==1:
     goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
@@ -272,6 +274,8 @@ while running:
         pygame.display.update()
         continue   # Stoppt alle anderen Zeichenfunktionen
 
+    if goose_grosse >= 8:
+         screen.blit(gooseee, (100,100))
 
     # ----------- DRAW HEALTH BARS -------------
     for bar in all_health_bars:
@@ -281,5 +285,6 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
 
 
