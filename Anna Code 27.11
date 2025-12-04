@@ -33,6 +33,8 @@ raw_goose = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png"
 goose_verfolg = pygame.image.load("C:/Users/ReDI User/Downloads/ANGRY GOOSE.png").convert_alpha()
 goose_original = trim_transparent_border(raw_goose)
 
+goose_findetdich = pygame.image.load("C:/Users/ReDI User/Downloads/I WILL FIND YOU.png")
+
 # ----------- NEW CENTER SYSTEM -----------
 goose_center = (310, 330)
 goose_scale = 0.4
@@ -321,7 +323,8 @@ while running:
         continue   # Stoppt alle anderen Zeichenfunktionen
      # ----------- DRAW GOOSE (CENTERED) -------------
     center_image(screen, goose_img, goose_center)
-
+     if goose_grosse >= 8:
+        screen.blit(goose_findetdich, (10,-110))
 
     # ----------- DRAW HEALTH BARS -------------
     for bar in all_health_bars:
