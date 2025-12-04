@@ -66,15 +66,34 @@ sleep_symbol = pygame.transform.scale(sleep_symbol, (75,50))
 soap_symbol = pygame.image.load("C:/Users/ReDI User/Downloads/SOAP BILD.png")
 soap_symbol = pygame.transform.scale(soap_symbol, (75,50))
 
+hearts_symbol = pygame.image.load("C:/Users/ReDI User/Downloads/HAPPIENESS BILD.png")
+hearts_symbol = pygame.transform.scale(hearts_symbol, (75,50))
+
+#------------------HEARTS_SYMBOLS: HAPPY GOOSE------------------
+hrt_image = pygame.image.load("C:/Users/ReDI User/Downloads/NORMAL HEARTS PNG.png")
+hrt_image = pygame.transform.scale(hrt_image, (500, 500))
+show_heart = False
+
+zzz_image = pygame.image.load("C:/Users/ReDI User/Downloads/SLEEP PNG.png")
+zzz_image = pygame.transform.scale(zzz_image, (100, 100))
+show_zzz = False
+
+game_over_image = pygame.image.load("C:/Users/ReDI User/Downloads/BAD ENDING 1.png")
+game_over_image = pygame.transform.scale(game_over_image, (800, 600))
+game_over = False
+
 # Rect bekommt automatisch die Größe des Bildes
 fake_meat = meat_symbol.get_rect()
-fake_meat.topleft = (475, 60)
+fake_meat.topleft = (475, 67)
 
 fake_sleep = sleep_symbol.get_rect()
 fake_sleep.topleft = (475, 130)
 
 fake_soap = soap_symbol.get_rect()
 fake_soap.topleft = (475, 100)
+
+fake_hearts = hearts_symbol.get_rect()
+fake_hearts.topleft = (475, 30)
 
 DRAIN_RATE_PER_SECOND = 2.0
 DRAIN_RATE_PLAY = 3.0
@@ -143,7 +162,10 @@ while running:
                 goose = 1
                 if goose ==1:
                     goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
-                    goose_1 = pygame.transform.scale(goose_1, (800, 600)) 
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600))
+                show_heart = False
+                show_zzz = False
+                
             if event.key == pygame.K_p:  # Play
                 health_bar_play.hp = min(100, health_bar_play.hp + 20)
                 print("spielen +20")
@@ -155,7 +177,10 @@ while running:
                 goose = 1
                 if goose ==1:
                     goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
-                    goose_1 = pygame.transform.scale(goose_1, (800, 600))                     
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600))
+                show_heart = True
+                show_zzz = False
+                
             if event.key == pygame.K_s:  # Sleep
                 health_bar_sleep.hp = min(100, health_bar_sleep.hp + 20)
                 print("schlafen +20")
@@ -166,7 +191,10 @@ while running:
                 goose = 1
                 if goose ==1:
                     goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE PNG.png")
-                    goose_1 = pygame.transform.scale(goose_1, (800, 600))      
+                    goose_1 = pygame.transform.scale(goose_1, (800, 600))
+                show_heart = False
+                show_zzz = True
+                
             if event.key == pygame.K_w:  # Wash
                 health_bar_bath.hp = min(100, health_bar_bath.hp + 20)
                 print("waschen +20")
@@ -178,7 +206,8 @@ while running:
                 if goose == 2:
                     goose_1 = pygame.image.load("C:/Users/ReDI User/Downloads/SMALL GOOSE BATH PNG.png")
                     goose_1 = pygame.transform.scale(goose_1, (800, 600))
-
+                show_heart = False
+                show_zzz = False
 
         # Menu button
         if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
@@ -203,6 +232,12 @@ while running:
     health_bar_play.update_health(dt, DRAIN_RATE_PLAY)
     health_bar_food.update_health(dt, DRAIN_RATE_FOOD)
     health_bar_sleep.update_health(dt, DRAIN_RATE_SLEEP)
+    
+    if (health_bar_food.hp <= 0 or
+        health_bar_play.hp <= 0 or
+        health_bar_bath.hp <= 0 or
+        health_bar_sleep.hp <= 0):
+        game_over = True
 
     # ----------- DRAW MENU WINDOW -------------
     if menu_button:
@@ -220,16 +255,28 @@ while running:
     screen.blit(meat_symbol, fake_meat)
     screen.blit(sleep_symbol, fake_sleep)
     screen.blit(soap_symbol, fake_soap)
+    screen.blit(hearts_symbol, fake_hearts)
     
     color = BUTTON_HOVER if button_rect.collidepoint(mouse_pos) else BUTTON_COLOR
     pygame.draw.rect(screen, color, button_rect)
 
     text_surf = font.render("MENU", True, TEXT_COLOR)
     screen.blit(text_surf, text_surf.get_rect(center=button_rect.center))
+    
+    if show_heart == True:
+        screen.blit(hrt_image, (110, 100))
+    if show_zzz == True:
+        screen.blit(zzz_image, (300, 200))
+    if game_over == True:
+        screen.blit(game_over_image, (0, 0))
+        pygame.display.update()
+        continue   # Stoppt alle anderen Zeichenfunktionen
+
 
     # ----------- DRAW HEALTH BARS -------------
     for bar in all_health_bars:
         bar.draw(screen)
+    
 
     pygame.display.update()
 
